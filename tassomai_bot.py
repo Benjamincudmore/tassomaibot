@@ -1,10 +1,20 @@
 from selenium import webdriver
-from config import email, password
+from config import email, password, browser
 import time
+browser = browser.lower()
+if browser != "chrome":
+    if browser != "firefox":
+        print("Incorrect browser selected, please choose either Chrome or Firefox")
+        exit()
+else:
+    pass
 
 class TassomaiBot():
     def __init__(self):
-        self.driver = webdriver.Firefox()
+        if browser == "firefox":
+            self.driver = webdriver.Firefox()
+        elif browser == "chrome":
+            self.driver = webdriver.Chrome()
     
     def login(self):
         self.driver.get("https://app.tassomai.com/login")
@@ -42,7 +52,8 @@ try:
     bot = TassomaiBot()
     bot.login()
 except:
-    print("Geckodriver not found in PATH, please follow step 1.3 at 'https://selenium-python.readthedocs.io/installation.html#detailed-instructions-for-windows-users' to install the driver")
+    print("Geckodriver not found in PATH, please instructions at https://github.com/sharp312/tassomaibot/wiki/Windows-10-setup-instructions")
+    exit()
 #start = input("Press enter when logged in")
 
 time.sleep(2)
