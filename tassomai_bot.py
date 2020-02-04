@@ -1,13 +1,31 @@
 from selenium import webdriver
-from config import email, password, browser
+import pickle
 import time
-browser = browser.lower()
-if browser != "chrome":
-    if browser != "firefox":
-        print("Incorrect browser selected, please choose either Chrome or Firefox")
-        exit()
-else:
-    pass
+global browser, email, password
+
+try:
+    with open("config.pickle", "rb") as f:
+        global email, password, browser
+        email = pickle.load(f)
+        password = pickle.load(f)
+        browser= pickle.load(f)
+    print("Configuration loaded")
+    print(email)
+    print("password loaded")
+    print(browser)
+except:
+    def configsetup():
+        global browser, email, password
+        print("Configuration not setup. Beginning setup now")
+        email = input("Tassomai email: ")
+        password = input("Tassomai password: ")
+        browser = input("Browser: Chrome or Firefox: ").lower()
+        with open("config.pickle", "wb") as f:
+            pickle.dump(email, f)
+            pickle.dump(password, f)
+            pickle.dump(browser, f)
+        print("Success! Settings saved. To edit your settings please delete 'config.piclke' and rerun this program")
+    configsetup()
 
 class TassomaiBot():
     def __init__(self):
@@ -47,16 +65,17 @@ class TassomaiBot():
         start_btn = self.driver.find_element_by_xpath('/html/body/tasso-app/tasso-entry/div/div/learner-dashboard/div/tass-goal-page/div/div[2]/tass-quiz-suggestions-container/tass-quiz-suggestions/div/div[2]/tass-start-quiz-container[1]/tass-start-quiz/div/div[2]/div[2]/button')
         start_btn.click()
 
-try:
+#try:
 
-    bot = TassomaiBot()
-    bot.login()
-except:
-    print("Geckodriver not found in PATH, please instructions at https://github.com/sharp312/tassomaibot/wiki/Windows-10-setup-instructions")
-    exit()
+bot = TassomaiBot()
+time.sleep(3)
+bot.login()
+#except:
+ #   print("Geckodriver not found in PATH, please instructions at https://github.com/sharp312/tassomaibot/wiki/Windows-10-setup-instructions")
+  #  exit()
 #start = input("Press enter when logged in")
 
-time.sleep(2)
+time.sleep(3)
 while True:
     bot.startbtn()
     time.sleep(2)
