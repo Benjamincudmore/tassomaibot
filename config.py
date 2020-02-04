@@ -1,2 +1,4 @@
-email = 'Tassomai email here'
-password = 'Tassomai password here'
+#browser options: Chrome or Firefox
+email = 'Tassomai email'
+password = 'Tassomai password'
+browser = 'Firefox'
